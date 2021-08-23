@@ -7,12 +7,13 @@ public class WalkRandom : MonoBehaviour
      public float speed;
      public float maxTransform;
      public float minTransform;
-     private int direction = 1;
+     public int direction = 1;
      public SpriteRenderer sprite;
 
     void Start(){
         ChooseDirection();
         StartCoroutine("ChangeDirection");
+        
     }
 
     void Update()
@@ -27,21 +28,23 @@ public class WalkRandom : MonoBehaviour
         yield return new WaitForSeconds(3f);
         ChooseDirection();
     }
- }
+    }
  
      public void checkDirection()
      {
-         //Debug.Log("transform.position.x "+transform.position.x);
          if (transform.position.x >= maxTransform)
          {
              direction = -1;
-             sprite.flipX=false;
          }
          else if (transform.position.x <= minTransform)
          {
              direction = 1;
-             sprite.flipX=true;
          }
+        if(direction==1){
+            sprite.flipX=true;
+        }else{
+            sprite.flipX=false;
+        }
      }
 
      void ChooseDirection(){

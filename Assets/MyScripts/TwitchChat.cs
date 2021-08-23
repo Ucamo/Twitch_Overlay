@@ -156,6 +156,10 @@ public class TwitchChat : MonoBehaviour
                         StartCoroutine(GetTexture("https://static-cdn.jtvnw.net/emoticons/v1/" + emoteID + "/3.0",chatName));
                     }
                 }
+                //Check for custom actions
+                if(message.ToLower().Contains("!jump")){
+                    SendActionToAvatar("jump",chatName);
+                }
             }
             //reply to ping to stay connected
             if (message.Contains("PING :tmi.twitch.tv"))
@@ -164,6 +168,13 @@ public class TwitchChat : MonoBehaviour
                 writer.Flush();
                 print("replied");
             }
+        }
+    }
+
+    void SendActionToAvatar(string command, string chatName){
+        GameObject avatar = GameObject.Find(chatName);
+        if(avatar!=null){
+            avatar.GetComponent<ChatCommandsToActions>().SendCommand(command);                      
         }
     }
  
