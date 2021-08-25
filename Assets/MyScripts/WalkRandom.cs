@@ -55,4 +55,5 @@ public class WalkRandom : MonoBehaviour
             direction=1;
         }
      }
+    
 }

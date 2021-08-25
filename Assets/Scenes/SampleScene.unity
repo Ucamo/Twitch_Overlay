@@ -347,8 +347,8 @@ Camera:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -483,7 +483,7 @@ MonoBehaviour:
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 10
+  m_fontSizeMin: 12
   m_fontSizeMax: 18
   m_fontStyle: 0
   m_HorizontalAlignment: 1
@@ -559,13 +559,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   username: El_Tutsi
-  password: 
+  password: oauth:s6a0trsblf9xd1jdjjt8a9f7p092ue
   channel: el_tutsi
   custom_rewards_id: 
   emotePrefab: {fileID: 8231637785659367997, guid: cd5ffb816358d3d48a29413b953744b4, type: 3}
   startPoint: {fileID: 1508956605}
   chatBox: {fileID: 1507125970}
   avatarSpawn: {fileID: 3092232718984376637, guid: 3e7df41ca5d4fae48822bd37748aaba2, type: 3}
+  MaxNumberOfAvatars: 5
+  LifeTimeInMinutes: 1
+  MaxNumbersOfMessagesOnChatBox: 25
   avatars: []
 --- !u!4 &1508956605
 Transform:

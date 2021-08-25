@@ -15,6 +15,9 @@ public class ChatAvatar
     public Color color;
 
     public string Message;
+
+    public DateTime LastMessage;
+    public bool isActive;
 }
  
 public class TwitchChat : MonoBehaviour
@@ -36,6 +39,12 @@ public class TwitchChat : MonoBehaviour
     public TextMeshProUGUI chatBox;
  
     public GameObject avatarSpawn;
+
+    public int MaxNumberOfAvatars=10;
+    public int LifeTimeInMinutes=5;
+
+    public int MaxNumbersOfMessagesOnChatBox=30;
+    private int currentNumberOfMessages=0;
  
     public List<ChatAvatar> avatars = new List<ChatAvatar>();
     // testing index
@@ -62,7 +71,24 @@ public class TwitchChat : MonoBehaviour
  
         }
  
-        ProcessChat();
+        ProcessChat();       
+    }
+
+    void CheckAvatarTimes(){
+        DateTime now = DateTime.Now;
+        foreach(ChatAvatar avatar in avatars){
+           TimeSpan span = now.Subtract ( avatar.LastMessage );
+           Debug.Log(avatar.UserName+ " span.TotalMinutes "+span.TotalMinutes);
+           if(span.TotalMinutes>=LifeTimeInMinutes){
+               GameObject avatarToDelete = GameObject.Find(avatar.UserName);
+               if(avatarToDelete!=null){
+                   avatar.isActive=false;
+                   avatarToDelete.transform.Find("Canvas").gameObject.SetActive(false);
+                   avatarToDelete.transform.Find("Sprite").gameObject.SetActive(false);
+               }
+           }
+          
+        }
     }
  
  
@@ -180,8 +206,14 @@ public class TwitchChat : MonoBehaviour
  
     void ConvertText(string chatName, string chatText)
     {
+        if(currentNumberOfMessages>=MaxNumbersOfMessagesOnChatBox){
+            chatBox.text="";
+            currentNumberOfMessages=0;
+        }
         // set the username and text to the text box
         chatBox.text += "<color=blue>" + chatName + "</color> :" + chatText + "\n";
+        currentNumberOfMessages++;
+        
     }
  
     ChatAvatar AddNewAvatar(string UserName)
@@ -194,17 +226,35 @@ public class TwitchChat : MonoBehaviour
     }
     void CheckAvatars(string name)
     {
+        DateTime currentTime = DateTime.Now;
         // check if avatar is already in list
         if (avatars.Any(x => x.UserName == name))
         {
+            ChatAvatar avatar = avatars.Where(x=> x.UserName==name).FirstOrDefault();
+            if(avatar!=null){
+                avatar.LastMessage=currentTime;
+                GameObject ava = GameObject.Find(avatar.UserName);
+                if(ava!=null){
+                    avatar.isActive=true;
+                    ava.transform.Find("Canvas").gameObject.SetActive(true);
+                    ava.transform.Find("Sprite").gameObject.SetActive(true);
+                }
+            }
             return;
         }
         // otherwise add it and a spawn an avatar
         else
         {
             ChatAvatar newAvatar = AddNewAvatar(name);
+            newAvatar.LastMessage=currentTime;
+            newAvatar.isActive=true;
             avatars.Add(newAvatar);
             SpawnNewAv(newAvatar);
+            int activeAvatars = avatars.Where(x=> x.isActive==true).Count();      
+            Debug.Log("activeAvatars "+activeAvatars);
+            if(activeAvatars>=MaxNumberOfAvatars){
+                CheckAvatarTimes();
+            }            
         }
     }
  
