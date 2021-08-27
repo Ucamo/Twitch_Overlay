@@ -52,6 +52,17 @@ public class TwitchChat : MonoBehaviour
     void Start()
     {
         Connect();
+        LoadPlayerPrefs();
+    }
+
+    void LoadPlayerPrefs(){
+        string maxNumAvatars = PlayerPrefs.GetString(UIController.Settings.MaxNumberOfAvatars.ToString(),"10");
+        string avatarLifetime = PlayerPrefs.GetString(UIController.Settings.AvatarLifeTime.ToString(),"1");
+        string maxChatMessage = PlayerPrefs.GetString(UIController.Settings.MaxChatMessages.ToString(),"20");
+
+        MaxNumberOfAvatars = Convert.ToInt32(maxNumAvatars);
+        LifeTimeInMinutes= Convert.ToInt32(avatarLifetime);
+        MaxNumbersOfMessagesOnChatBox= Convert.ToInt32(maxChatMessage);
     }
  
     void Update()

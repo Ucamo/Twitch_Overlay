@@ -205,7 +205,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7813015}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1004016878}
+        m_TargetAssemblyTypeName: UIController, Assembly-CSharp
+        m_MethodName: SaveConfig
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1004016878}
+        m_TargetAssemblyTypeName: UIController, Assembly-CSharp
+        m_MethodName: HidePanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7813015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2539,10 +2563,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   configPanel: {fileID: 631316843}
-  txtMaxNumberAvatars: {fileID: 0}
-  txtAvatarLifetime: {fileID: 0}
-  txtMaxChatMessages: {fileID: 0}
-  IsShowChat: {fileID: 0}
+  txtMaxNumberAvatars: {fileID: 204990854}
+  txtAvatarLifetime: {fileID: 32928236}
+  txtMaxChatMessages: {fileID: 2051558302}
+  IsShowChat: {fileID: 414923937}
 --- !u!1 &1231406856
 GameObject:
   m_ObjectHideFlags: 0
