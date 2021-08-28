@@ -24,7 +24,6 @@ public class WalkRandom : MonoBehaviour
 
     IEnumerator ChangeDirection() {
     {        
-        Debug.Log("direction "+direction);
         yield return new WaitForSeconds(3f);
         ChooseDirection();
     }

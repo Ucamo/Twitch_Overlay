@@ -41,7 +41,7 @@ public class TwitchChat : MonoBehaviour
     public GameObject avatarSpawn;
 
     public int MaxNumberOfAvatars=10;
-    public int LifeTimeInMinutes=5;
+    public double LifeTimeInMinutes=5;
 
     public int MaxNumbersOfMessagesOnChatBox=30;
     private int currentNumberOfMessages=0;
@@ -51,18 +51,38 @@ public class TwitchChat : MonoBehaviour
     int indext = 0;
     void Start()
     {
+        LoadInitialConfig();
         Connect();
         LoadPlayerPrefs();
     }
 
-    void LoadPlayerPrefs(){
+    void LoadInitialConfig(){
+        string user = PlayerPrefs.GetString(InitialConfiguration.Settings.UserName.ToString(),"");
+        string pass = PlayerPrefs.GetString(InitialConfiguration.Settings.Password.ToString(),"");
+        string chan = PlayerPrefs.GetString(InitialConfiguration.Settings.Channel.ToString(),"");
+
+        username=user;
+        password=pass;
+        channel=chan;
+    }
+
+    public void LoadPlayerPrefs(){     
         string maxNumAvatars = PlayerPrefs.GetString(UIController.Settings.MaxNumberOfAvatars.ToString(),"10");
         string avatarLifetime = PlayerPrefs.GetString(UIController.Settings.AvatarLifeTime.ToString(),"1");
         string maxChatMessage = PlayerPrefs.GetString(UIController.Settings.MaxChatMessages.ToString(),"20");
-
+        int showChat = PlayerPrefs.GetInt(UIController.Settings.IsShowChat.ToString(),0);
         MaxNumberOfAvatars = Convert.ToInt32(maxNumAvatars);
-        LifeTimeInMinutes= Convert.ToInt32(avatarLifetime);
+        LifeTimeInMinutes= Convert.ToDouble(avatarLifetime);
         MaxNumbersOfMessagesOnChatBox= Convert.ToInt32(maxChatMessage);
+        if(showChat==1){
+            ShowChat(true);
+        }else{
+            ShowChat(false);
+        }
+    }
+
+    void ShowChat(bool showChat){
+        chatBox.enabled=showChat;
     }
  
     void Update()
@@ -89,7 +109,6 @@ public class TwitchChat : MonoBehaviour
         DateTime now = DateTime.Now;
         foreach(ChatAvatar avatar in avatars){
            TimeSpan span = now.Subtract ( avatar.LastMessage );
-           Debug.Log(avatar.UserName+ " span.TotalMinutes "+span.TotalMinutes);
            if(span.TotalMinutes>=LifeTimeInMinutes){
                GameObject avatarToDelete = GameObject.Find(avatar.UserName);
                if(avatarToDelete!=null){
@@ -262,7 +281,6 @@ public class TwitchChat : MonoBehaviour
             avatars.Add(newAvatar);
             SpawnNewAv(newAvatar);
             int activeAvatars = avatars.Where(x=> x.isActive==true).Count();      
-            Debug.Log("activeAvatars "+activeAvatars);
             if(activeAvatars>=MaxNumberOfAvatars){
                 CheckAvatarTimes();
             }            
